@@ -4,7 +4,7 @@ import 'package:bloc_example/models/api_response.dart';
 import 'package:bloc_example/services/weather_api_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BlocWeather extends Bloc {
+class BlocWeather extends Bloc<EventWeather, StateWeather> {
   BlocWeather() : super(StateWeatherInitialize()) {
     on<EventWeatherGetInfo>(_getWeatherInfo);
   }
@@ -19,6 +19,3 @@ class BlocWeather extends Bloc {
     }
   }
 }
-
-
-
