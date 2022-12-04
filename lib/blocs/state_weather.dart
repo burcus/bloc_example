@@ -6,11 +6,10 @@ class StateWeatherInitialize extends StateWeather {}
 
 class StateWeatherInfoFetching extends StateWeather {}
 
-
 class StateWeatherInfoFetched extends StateWeather {
-  final WeatherInfo weatherInfo;
+  final List<WeatherInfo> weatherInfoList;
 
-  StateWeatherInfoFetched(this.weatherInfo);
+  StateWeatherInfoFetched(this.weatherInfoList);
 }
 
 class StateWeatherFailed extends StateWeather {
@@ -18,8 +17,3 @@ class StateWeatherFailed extends StateWeather {
 
   StateWeatherFailed(this.errorMessage);
 }
-
-
-
-
-

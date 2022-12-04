@@ -12,10 +12,12 @@ class BlocWeather extends Bloc<EventWeather, StateWeather> {
   Future<void> _getWeatherInfo(EventWeatherGetInfo event, emit) async {
     emit(StateWeatherInfoFetching());
     ApiResponse response = await WeatherApiService.fetchWeatherInfo(event.city);
-    if (response.isSuccess) {
-      emit(StateWeatherInfoFetched(response.weatherInfo!));
+    if (response.success) {
+      emit(StateWeatherInfoFetched(response.result!));
     } else {
-      emit(StateWeatherFailed(response.errorMessage ?? ''));
+      emit(StateWeatherFailed(response.message ?? ''));
     }
   }
 }
+
+

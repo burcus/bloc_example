@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:bloc_example/models/api_request.dart';
 import 'package:bloc_example/models/api_response.dart';
-import 'package:bloc_example/models/weather_info.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -12,23 +11,22 @@ class WeatherApiService {
 
   static Future<ApiResponse> fetchWeatherInfo(String city) async {
     late Response httpResponse;
+
     try {
       httpResponse = await http.get(Uri.parse('$apiQuery$city'), headers: {
         HttpHeaders.authorizationHeader: ApiRequest.authorization,
         HttpHeaders.contentTypeHeader: ApiRequest.contentType
       });
-
       if (httpResponse.statusCode == 200) {
-        String result = httpResponse.body;
-        return ApiResponse(
-            isSuccess: true,
-            weatherInfo: WeatherInfo.fromJson(jsonDecode(result)));
+        String responseBody = httpResponse.body;
+        ApiResponse response = ApiResponse.fromJson(jsonDecode(responseBody));
+        return response;
       } else {
-        // String result = httpResponse. todo credential değiştir
-        return ApiResponse(isSuccess: false, errorMessage: "");
+        return ApiResponse(
+            success: false, message: httpResponse.body.toString());
       }
     } catch (e) {
-      return ApiResponse(isSuccess: false, errorMessage: e.toString());
+      return ApiResponse(success: false, message: e.toString());
     }
   }
 }
