@@ -1,9 +1,11 @@
 import 'package:bloc_example/blocs/bloc_weather.dart';
+import 'package:bloc_example/custom_bloc_observer.dart';
 import 'package:bloc_example/pages/page_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  Bloc.observer = CustomBlocObserver();
   runApp(const MyApp());
 }
 
