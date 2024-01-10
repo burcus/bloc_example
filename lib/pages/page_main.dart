@@ -55,7 +55,8 @@ class _PageMainState extends State<PageMain> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: BlocBuilder<BlocWeather, StateWeather>(builder: (context, state) {
+            child: BlocBuilder<BlocWeather, StateWeather>(
+                builder: (context, state) {
               if (state is StateWeatherInfoFetching) {
                 return const SizedBox(
                   width: 50,
@@ -63,18 +64,24 @@ class _PageMainState extends State<PageMain> {
                   child: CircularProgressIndicator(),
                 );
               } else if (state is StateWeatherInfoFetched) {
-                List<WeatherInfo> weathers = state.weatherInfoList;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: weathers
-                      .map((e) => Text(
-                          '${e.date.toString()} - ${e.degree}\u00b0 - ${e.status}'))
-                      .toList(),
+                return ListView.separated(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    WeatherInfo weatherInfo = state.weatherInfoList[index];
+                    return ListTile(
+                      title: Text(
+                          '${weatherInfo.date.toString()} - ${weatherInfo.degree}\u00b0 - ${weatherInfo.status}'),
+                    );
+                  },
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: state.weatherInfoList.length,
                 );
               } else if (state is StateWeatherFailed) {
                 return Text('There is an error: ${state.errorMessage}');
+              } else if (_textController.text == "") {
+                return const Text('Please enter a city name');
               } else {
-                return const SizedBox(); //for initialState
+                return const SizedBox();
               }
             }),
           )
