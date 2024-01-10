@@ -1,3 +1,3 @@
 class Credentials {
-  static const apiKey = "yourAPIKEY";
+  static const apiKey = "apikey 5azgEmAqFYQootk38OlSqV:3fBQxPc470r6vKKvvRCY9c";
 }
